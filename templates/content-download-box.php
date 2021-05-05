@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <aside class="download-box">
-
 	<?php $dlm_download->the_image(); ?>
 
 	<div
@@ -21,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<h1><?php $dlm_download->the_title(); ?></h1>
 
-		<?php $dlm_download->the_excerpt(); ?>
+		<?php $dlm_download->the_excerpt() ?>
 
 		<a class="download-button" title="<?php if ( $dlm_download->get_version()->has_version_number() ) {
 			printf( __( 'Version %s', 'download-monitor' ), $dlm_download->get_version()->get_version_number() );

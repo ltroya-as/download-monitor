@@ -305,6 +305,7 @@ class DLM_Shortcodes {
 
 		$post__in     = ! empty( $include ) ? explode( ',', $include ) : '';
 		$post__not_in = ! empty( $exclude ) ? explode( ',', $exclude ) : '';
+		$tag_not_in = ! empty( $exclude_tag ) ? explode( ',', $exclude_tag ) : '';
 		$order        = strtoupper( $order );
 		$meta_key     = '';
 
@@ -409,7 +410,7 @@ class DLM_Shortcodes {
 				$args['tax_query'][] = array(
 					'taxonomy' => 'dlm_download_tag',
 					'field'    => 'slug',
-					'terms'    => $exclude_tag,
+					'terms'    => $tag_not_in,
 					'operator' => 'NOT IN'
 				);
 			}

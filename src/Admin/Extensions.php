@@ -119,38 +119,7 @@ class DLM_Admin_Extensions {
 						echo '<p>Wow, looks like you installed all our extensions. Thanks, you rock!</p>';
 					}
 
-					// Installed Extensions
-					if ( count( $installed_extensions ) > 0 ) {
-
-						echo '<div id="installed-extensions" class="settings_panel">' . PHP_EOL;
-
-						echo '<div class="theme-browser dlm_extensions">';
-						foreach ( $installed_extensions as $extension ) {
-
-							// Get the product
-							$license = $products[ $extension->product_id ]->get_license();
-
-							echo '<div class="theme dlm_extension">';
-
-							echo '<div class="dlm_extension_img_wrapper"><img src="' . esc_attr( $extension->image ) . '" alt="' . esc_attr( $extension->name ) . '" /></div>' . PHP_EOL;
-							echo '<h3>' . esc_html( $extension->name ) . '</h3>' . PHP_EOL;
-
-							echo '<div class="extension_license">' . PHP_EOL;
-							echo '<p class="license-status' . ( ( $license->is_active() ) ? ' active' : '' ) . '">' . esc_html( strtoupper( $license->get_status() ) ) . '</p>' . PHP_EOL;
-							echo '<input type="hidden" id="dlm-ajax-nonce" value="' . wp_create_nonce( 'dlm-ajax-nonce' ) . '" />' . PHP_EOL;
-							echo '<input type="hidden" id="status" value="' . esc_attr( $license->get_status() ) . '" />' . PHP_EOL;
-							echo '<input type="hidden" id="product_id" value="' . esc_attr( $extension->product_id ) . '" />' . PHP_EOL;
-							echo '<input type="text" name="key" id="key" value="' . esc_attr( $license->get_key() ) . '" placeholder="License Key"' . ( ( $license->is_active() ) ? ' disabled="disabled"' : '' ) . ' />' . PHP_EOL;
-							echo '<input type="text" name="email" id="email" value="' . esc_attr( $license->get_email() ) . '" placeholder="License Email"' . ( ( $license->is_active() ) ? ' disabled="disabled"' : '' ) . ' />' . PHP_EOL;
-							echo '<a href="javascript:;" class="button button-primary">' . ( ( $license->is_active() ) ? 'Deactivate' : 'Activate' ) . '</a>';
-							echo '</div>' . PHP_EOL;
-
-							echo '</div>';
-						}
-						echo '</div>';
-						echo '</div>' . PHP_EOL;
-
-					}
+					do_action( 'dlm_installed_extensions', $installed_extensions, $products );
 
 				}
 

@@ -20,7 +20,6 @@ class DLM_Ajax_Handler {
 		add_action( 'wp_ajax_download_monitor_list_files', array( $this, 'list_files' ) );
 		add_action( 'wp_ajax_download_monitor_insert_panel_upload', array( $this, 'insert_panel_upload' ) );
 		add_action( 'wp_ajax_dlm_settings_lazy_select', array( $this, 'handle_settings_lazy_select' ) );
-		add_action( 'wp_ajax_dlm_extension', array( $this, 'handle_extensions' ) );
 		add_action( 'wp_ajax_dlm_dismiss_notice', array( $this, 'dismiss_notice' ) );
 	}
 
@@ -230,48 +229,5 @@ class DLM_Ajax_Handler {
 
 	}
 
-	/**
-	 * Handle extensions AJAX
-	 */
-	public function handle_extensions() {
 
-		// Check nonce
-		check_ajax_referer( 'dlm-ajax-nonce', 'nonce' );
-
-		// Post vars
-		$product_id       = sanitize_text_field( $_POST['product_id'] );
-		$key              = sanitize_text_field( $_POST['key'] );
-		$email            = sanitize_text_field( $_POST['email'] );
-		$extension_action = $_POST['extension_action'];
-
-		// Get products
-		$products = DLM_Product_Manager::get()->get_products();
-
-		// Check if product exists
-		$response = "";
-		if ( isset( $products[ $product_id ] ) ) {
-
-			// Get correct product
-			/** @var DLM_Product $product */
-			$product = $products[ $product_id ];
-
-			// Set new key in license object
-			$product->get_license()->set_key( $key );
-
-			// Set new email in license object
-			$product->get_license()->set_email( $email );
-
-			if ( 'activate' === $extension_action ) {
-				// Try to activate the license
-				$response = $product->activate();
-			} else {
-				// Try to deactivate the license
-				$response = $product->deactivate();
-			}
-
-		}
-
-		// Send JSON
-		wp_send_json( $response );
-	}
 }

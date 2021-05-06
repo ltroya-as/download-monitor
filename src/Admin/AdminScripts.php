@@ -153,16 +153,6 @@ class DLM_Admin_Scripts {
 				'settings_url'      => DLM_Admin_Settings::get_url()
 			) );
 
-			if ( 'dlm-extensions' === $_GET['page'] ) {
-				// Enqueue Extesions JS
-				wp_enqueue_script(
-					'dlm_extensions',
-					plugins_url( '/assets/js/extensions' . ( ( ! SCRIPT_DEBUG ) ? '.min' : '' ) . '.js', $dlm->get_plugin_file() ),
-					array( 'jquery' ),
-					DLM_VERSION
-				);
-			}
-
 		}
 
 		if ( 'options.php' == $pagenow && isset( $_GET['page'] ) && 'dlm_legacy_upgrade' === $_GET['page'] ) {

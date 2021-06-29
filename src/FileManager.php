@@ -53,6 +53,11 @@ class DLM_File_Manager {
 		$wp_uploads_dir = $wp_uploads['basedir'];
 		$wp_uploads_url = $wp_uploads['baseurl'];
 
+		// Temp fix for DigitalOcean Spaces 
+		if(class_exists('DOS') && !strpos( $_SERVER['SERVER_NAME'], $wp_uploads_url ) ){
+		  	return array( $file_path, $remote_file );
+		}
+		
 		if ( ( ! isset( $parsed_file_path['scheme'] ) || ! in_array( $parsed_file_path['scheme'], array(
 					'http',
 					'https',
